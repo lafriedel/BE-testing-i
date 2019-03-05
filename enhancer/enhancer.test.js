@@ -40,7 +40,6 @@ describe("enhancer.js", () => {
   });
 
   describe("repair()", () => {
-    describe("durability", () => {
       it("should restore durability to 100", () => {
         const item = {
           name: "Lambda Shield",
@@ -60,22 +59,19 @@ describe("enhancer.js", () => {
 
         expect(repair(item)).toMatchObject(expected);
       });
-    });
   });
 
   describe("fail()", () => {
     //The durability of the item is decreased by 5 if the item's enhancement is between 0 and 14.
     it("durability decreases by 5 when item's enhancement is 14 or less", () => {
-        //arrange
+
       const item = {
           enhancement: 14,
           durability: 85
       };
-      //act
+
       const actual = fail(item);
 
-      
-      //assert
       expect(actual.durability).toBe(80)
     });
 
@@ -105,7 +101,7 @@ describe("enhancer.js", () => {
     // The name is updated to reflect the new enhancement level if it was decreased.
 
     // If the item's enhancement is 14 or lower, the item cannot be enhanced if the durability is below 25.
-    it('enhancement is 14 or lower, the item cannot be enhanced if the durability is below 25', () => {
+    it('should not affect item\'s enhancement if enhancement is 14 or lower and durability is below 25', () => {
         const item = {
             enhancement: 14,
             durability: 24
@@ -113,9 +109,19 @@ describe("enhancer.js", () => {
 
         const actual = fail(item);
 
-        expect(actual.durability).toBe(24);
+        expect(actual).toEqual(item);
     })
 
     // If the item's enhancement is 15 or higher, the item cannot be enhanced if the durability is below 10.
+    it('should not affect item\'s enhancement if enhancement is higher than 15 and durability is less than 10', () => {
+        const item = {
+            enhancement: 16,
+            durability: 9
+        };
+
+        const actual = fail(item);
+
+        expect(actual).toEqual(item);
+    })
   });
 });
