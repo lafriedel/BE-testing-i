@@ -2,62 +2,38 @@ const { repair, success, fail } = require("./enhancer");
 
 describe("enhancer.js", () => {
   describe("success()", () => {
-    it("enhancement increases by 1", () => {
+    it("increases enhancement by 1", () => {
       const item = {
-        name: "Lambda Shield",
-        type: "armor",
-        durability: 44,
-        enhancement: 3,
-        displayName: "[+3] Lambda Shield"
+        enhancement: 3
       };
 
-      const expectedIncrease = {
-        ...item,
-        enhancement: 4,
-        displayName: "[+4] Lambda Shield"
-      };
+      const actual = success(item);
 
-      expect(success(item)).toEqual(expectedIncrease);
+      expect(actual.enhancement).toBe(4);
     });
 
-    it("update name to reflect new enhancement", () => {
+    it("updates name to reflect new enhancement", () => {
       const item = {
         name: "Lambda Shield",
-        type: "armor",
-        durability: 44,
         enhancement: 3,
         displayName: "[+3] Lambda Shield"
       };
 
-      const updatedItem = {
-        ...item,
-        enhancement: 4,
-        displayName: "[+4] Lambda Shield"
-      };
+     const actual = success(item);
 
-      expect(success(item)).toEqual(updatedItem);
+      expect(actual.displayName).toEqual("[+4] Lambda Shield");
     });
   });
 
   describe("repair()", () => {
-      it("should restore durability to 100", () => {
+      it("restores durability to 100", () => {
         const item = {
-          name: "Lambda Shield",
-          type: "armor",
-          durability: 44,
-          enhancement: 3,
-          displayName: "[+3] Lambda Shield"
+          durability: 44
         };
 
-        const expected = {
-          name: "Lambda Shield",
-          type: "armor",
-          durability: 100,
-          enhancement: 3,
-          displayName: "[+3] Lambda Shield"
-        };
+        const actual = repair(item);
 
-        expect(repair(item)).toMatchObject(expected);
+        expect(actual.durability).toBe(100);
       });
   });
 
@@ -99,6 +75,9 @@ describe("enhancer.js", () => {
     })
 
     // The name is updated to reflect the new enhancement level if it was decreased.
+    it('updates display name if enhancement was decreased', () => {
+        
+    })
 
     // If the item's enhancement is 14 or lower, the item cannot be enhanced if the durability is below 25.
     it('should not affect item\'s enhancement if enhancement is 14 or lower and durability is below 25', () => {

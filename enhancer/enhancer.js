@@ -5,25 +5,26 @@ module.exports = {
 };
 
 function success(item) {
-  item = {
-    ...item,
-    enhancement: ++item.enhancement,
-    displayName: `${enhancementLevel[item.enhancement]} ${item.name}`
-  };
+  // The item's enhancement increases by 1.
+  const enhancement = ++item.enhancement;
 
-  return item;
+  // The item's name is updated to reflect the new enhancement
+
+  const displayName = `${enhancementLevel[enhancement]} ${item.name}`
+
+  return {...item, enhancement, displayName };
 }
 
 function fail(item) {
   // If the item's enhancement is 14 or lower, the item cannot be enhanced if the durability is below 25.
   if (item.enhancement < 15 && item.durability < 25) {
     return { ...item };
-  };
+  }
 
   // If the item's enhancement is 15 or higher, the item cannot be enhanced if the durability is below 10.
   if (item.enhancement >= 15 && item.durability < 10) {
-      return {...item};
-  };
+    return { ...item };
+  }
 
   // The durability of the item is decreased by 10 if the item's enhancement is greater than 14.
   // The durability of the item is decreased by 5 if the item's enhancement is between 0 and 14.
