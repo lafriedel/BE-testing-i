@@ -52,7 +52,7 @@ describe("enhancer.js", () => {
     });
 
     // The durability of the item is decreased by 10 if the item's enhancement is greater than 14.
-    it('durability decreases by 10 if enhancement is 14 or greater', () => {
+    it('decreases durability by 10 if enhancement is 14 or greater', () => {
         const item = {
             enhancement: 15,
             durability: 85
@@ -64,7 +64,7 @@ describe("enhancer.js", () => {
     })
 
     // If the item's enhancement level is greater than 16 (DUO, TRI, TET), the enhancement level decreases by 1 (a DUO item would go back to PRI on failure).
-    it('enhancement level decreases by 1 if enhancement level is greater than 16', () => {
+    it('decreases enhancement level by 1 if enhancement level is greater than 16', () => {
         const item = {
             enhancement: 18
         };
@@ -76,7 +76,15 @@ describe("enhancer.js", () => {
 
     // The name is updated to reflect the new enhancement level if it was decreased.
     it('updates display name if enhancement was decreased', () => {
-        
+        const item = {
+            name: "Lambda Shield",
+            enhancement: 20,
+            displayName: "[PEN] Lambda Shield"
+        }
+
+        const actual = fail(item);
+
+        expect(actual.displayName).toBe("[TET] Lambda Shield")
     })
 
     // If the item's enhancement is 14 or lower, the item cannot be enhanced if the durability is below 25.

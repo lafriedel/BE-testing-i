@@ -10,9 +10,9 @@ function success(item) {
 
   // The item's name is updated to reflect the new enhancement
 
-  const displayName = `${enhancementLevel[enhancement]} ${item.name}`
+  const displayName = `${enhancementLevel[enhancement]} ${item.name}`;
 
-  return {...item, enhancement, displayName };
+  return { ...item, enhancement, displayName };
 }
 
 function fail(item) {
@@ -35,7 +35,10 @@ function fail(item) {
   const enhancement =
     item.enhancement > 16 ? item.enhancement - 1 : item.enhancement;
 
-  return { ...item, durability, enhancement };
+  // The name is updated to reflect the new enhancement level if it was decreased.
+const displayName = enhancement === --item.enhancement && `${enhancementLevel[enhancement]} ${item.name}`
+
+  return { ...item, durability, enhancement, displayName };
 }
 
 function repair(item) {
